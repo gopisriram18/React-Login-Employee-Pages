@@ -22,23 +22,30 @@ function Loginpage(){
         setPassword(event.target.value);
     }
     const submitHandler=()=>{
-       let empDataObj=JSON.parse(empdata);
-       empDataObj.map((obj)=>{
-       if(obj.empName===empId)
-       {
-        if(obj.empPassword===password)
-        {
-          console.log("loginsuccess");
-          sessionStorage.setItem("username",obj.empName);
-          sessionStorage.setItem("Access",obj.empAccess);
-          navigate('/loginsuccess');
-        } else{
-          window.alert("Invalid Password");
-        }
+      let empDataObj=JSON.parse(empdata);
+      let userFound=false;
+      empDataObj.map((obj)=>{
+      if(obj.empName===empId){
+       userFound=true;
+       if(obj.empPassword===password){
+         console.log("loginsuccess");
+         sessionStorage.setItem("username",obj.empName);
+         sessionStorage.setItem("Access",obj.empAccess);
+         navigate('/loginsuccess');
+       } 
+       else{
+        window.alert("Invalid Password");
        }
       }
-      );
-    } 
+     }
+     );
+
+     if(!userFound){
+       window.alert("Username not found");
+     }
+    
+
+   } 
     
     
     return (
